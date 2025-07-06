@@ -17,12 +17,18 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Fetch event
+// Fetch event - bypass cache in development
 self.addEventListener('fetch', (event) => {
+  // In development, always fetch from network
+  if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // In production, use cache-first strategy
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
         return response || fetch(event.request);
       }
     )

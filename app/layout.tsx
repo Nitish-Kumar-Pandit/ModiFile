@@ -42,14 +42,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 
 
-                {/* Development warning suppression and cache control */}
+                {/* Development cache control and scripts */}
                 {process.env.NODE_ENV === 'development' && (
                     <>
-                        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate, proxy-revalidate, max-age=0" />
+                        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
                         <meta httpEquiv="Pragma" content="no-cache" />
                         <meta httpEquiv="Expires" content="0" />
-                        <meta httpEquiv="Surrogate-Control" content="no-store" />
                         <script src="/cache-buster.js" defer />
+                        <script src="/force-refresh.js" defer />
                         <script src="/suppress-warnings.js" defer />
                         <script src="/debug-errors.js" defer />
                     </>

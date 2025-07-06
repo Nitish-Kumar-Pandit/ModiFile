@@ -84,7 +84,7 @@ const nextConfig = {
 
     return [
       {
-        // Static assets from _next/static - cache only in production
+        // Static assets from _next/static
         source: '/_next/static/:path*',
         headers: [
           {
@@ -96,37 +96,29 @@ const nextConfig = {
         ],
       },
       {
-        // All other pages - no cache in development
+        // All other pages - simplified cache control
         source: '/:path*',
         headers: [
           { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
-          // Performance headers
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          // Aggressive no-cache in development
+          // Simplified cache control
           {
             key: 'Cache-Control',
             value: isDev
-              ? 'no-cache, no-store, must-revalidate, proxy-revalidate, max-age=0'
-              : 'public, max-age=60, must-revalidate'
+              ? 'no-cache, no-store, must-revalidate'
+              : 'public, max-age=0, must-revalidate'
           },
-          ...(isDev ? [
-            { key: 'Pragma', value: 'no-cache' },
-            { key: 'Expires', value: '0' },
-            { key: 'Surrogate-Control', value: 'no-store' },
-          ] : []),
         ],
       },
       {
         source: '/api/:path*',
         headers: [
           { key: 'Cache-Control', value: 'no-store, max-age=0' },
-          { key: 'Pragma', value: 'no-cache' },
-          { key: 'Expires', value: '0' },
         ],
       },
     ];
