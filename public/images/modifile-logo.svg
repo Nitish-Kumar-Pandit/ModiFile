@@ -1,0 +1,96 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Premium gradient for the icon -->
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Text gradient for light mode -->
+    <linearGradient id="textLight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Text gradient for dark mode -->
+    <linearGradient id="textDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cbd5e1;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow effect for the icon -->
+    <filter id="iconGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- File conversion icon -->
+  <g transform="translate(4, 6)">
+    <!-- Source file -->
+    <rect x="0" y="0" width="16" height="20" rx="2" fill="url(#iconGradient)" opacity="0.2"/>
+    <rect x="0" y="0" width="16" height="20" rx="2" stroke="url(#iconGradient)" stroke-width="1.5" fill="none" opacity="0.8"/>
+
+    <!-- File corner fold -->
+    <path d="M12 0 L16 4 L12 4 Z" fill="url(#iconGradient)" opacity="0.6"/>
+
+    <!-- Conversion arrow -->
+    <g transform="translate(20, 8)">
+      <path d="M0 2 L8 2 M6 0 L8 2 L6 4" stroke="url(#iconGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+      <!-- Animated dot -->
+      <circle cx="4" cy="2" r="1" fill="url(#iconGradient)" opacity="0.7">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0; 2,0; 0,0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- Target file -->
+    <g transform="translate(32, 0)">
+      <rect x="0" y="0" width="16" height="20" rx="2" fill="url(#iconGradient)" opacity="0.3"/>
+      <rect x="0" y="0" width="16" height="20" rx="2" stroke="url(#iconGradient)" stroke-width="1.5" fill="none"/>
+
+      <!-- File corner fold -->
+      <path d="M12 0 L16 4 L12 4 Z" fill="url(#iconGradient)" opacity="0.8"/>
+
+      <!-- Content lines -->
+      <rect x="3" y="6" width="10" height="1.5" rx="0.75" fill="url(#iconGradient)" opacity="0.6"/>
+      <rect x="3" y="9" width="8" height="1.5" rx="0.75" fill="url(#iconGradient)" opacity="0.5"/>
+      <rect x="3" y="12" width="9" height="1.5" rx="0.75" fill="url(#iconGradient)" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- ModiFile text -->
+  <g transform="translate(60, 12)">
+    <!-- Light mode text -->
+    <g class="light-mode-text">
+      <text x="0" y="12" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="700" fill="url(#textLight)">
+        Modi
+      </text>
+      <text x="42" y="12" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="500" fill="url(#iconGradient)">
+        File
+      </text>
+    </g>
+
+    <!-- Dark mode text -->
+    <g class="dark-mode-text" style="display: none;">
+      <text x="0" y="12" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="700" fill="url(#textDark)">
+        Modi
+      </text>
+      <text x="42" y="12" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="500" fill="url(#iconGradient)">
+        File
+      </text>
+    </g>
+  </g>
+
+  <!-- CSS for theme switching -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .light-mode-text { display: none !important; }
+      .dark-mode-text { display: block !important; }
+    }
+  </style>
+</svg>

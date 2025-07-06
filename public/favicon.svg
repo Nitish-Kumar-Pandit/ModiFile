@@ -1,0 +1,37 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#1E1B4B"/>
+  
+  <!-- Left Document -->
+  <rect x="3" y="6" width="10" height="12" rx="2" fill="url(#grad1)" stroke="#4C1D95" stroke-width="0.5"/>
+  <rect x="4" y="8" width="8" height="1" rx="0.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="4" y="10" width="6" height="1" rx="0.5" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="4" y="12" width="7" height="1" rx="0.5" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="4" y="14" width="5" height="1" rx="0.5" fill="#FFFFFF" opacity="0.4"/>
+  
+  <!-- Arrow -->
+  <path d="M14 11 L18 11 M16 9 L18 11 L16 13" stroke="url(#grad2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Right Document -->
+  <rect x="19" y="6" width="10" height="12" rx="2" fill="url(#grad2)" stroke="#BE185D" stroke-width="0.5"/>
+  <rect x="20" y="8" width="8" height="1" rx="0.5" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="20" y="10" width="6" height="1" rx="0.5" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="20" y="12" width="7" height="1" rx="0.5" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="20" y="14" width="5" height="1" rx="0.5" fill="#FFFFFF" opacity="0.4"/>
+  
+  <!-- Conversion indicator dots -->
+  <circle cx="8" cy="22" r="1" fill="#10B981" opacity="0.8"/>
+  <circle cx="16" cy="22" r="1" fill="#F59E0B" opacity="0.8"/>
+  <circle cx="24" cy="22" r="1" fill="#EF4444" opacity="0.8"/>
+</svg>

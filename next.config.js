@@ -1,0 +1,136 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: false,
+  // Disable caching completely in development
+  ...(process.env.NODE_ENV === 'development' && {
+    onDemandEntries: {
+      maxInactiveAge: 1000,
+      pagesBufferLength: 1,
+    },
+  }),
+  turbopack: {
+    resolveAlias: {
+      '@': '.',
+      '@/*': './*',
+    },
+  },
+  webpack: (config, { isServer }) => {
+    // Handle FFmpeg and other Node.js modules
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        path: false,
+        crypto: false,
+        stream: false,
+        util: false,
+        buffer: false,
+        events: false,
+        worker_threads: false,
+        child_process: false,
+      };
+    }
+
+    // Handle FFmpeg worker files
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: 'webassembly/async',
+    });
+
+    // Handle worker files for FFmpeg
+    config.module.rules.push({
+      test: /ffmpeg.*\.worker\.js$/,
+      use: {
+        loader: 'worker-loader',
+        options: {
+          name: 'static/[hash].worker.js',
+          publicPath: '/_next/',
+        },
+      },
+    });
+
+    // Ignore FFmpeg worker in server-side builds
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push('@ffmpeg/ffmpeg', '@ffmpeg/util');
+    }
+
+    // Optimize for faster builds and runtime
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+          ffmpeg: {
+            test: /[\\/]node_modules[\\/]@ffmpeg[\\/]/,
+            name: 'ffmpeg',
+            chunks: 'all',
+            priority: 10,
+          },
+        },
+      },
+    };
+
+    return config;
+  },
+  headers: async () => {
+    const isDev = process.env.NODE_ENV === 'development';
+
+    return [
+      {
+        // Static assets from _next/static - cache only in production
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: isDev
+              ? 'no-cache, no-store, must-revalidate'
+              : 'public, max-age=31536000, immutable'
+          },
+        ],
+      },
+      {
+        // All other pages - no cache in development
+        source: '/:path*',
+        headers: [
+          { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+          // Performance headers
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          // Aggressive no-cache in development
+          {
+            key: 'Cache-Control',
+            value: isDev
+              ? 'no-cache, no-store, must-revalidate, proxy-revalidate, max-age=0'
+              : 'public, max-age=60, must-revalidate'
+          },
+          ...(isDev ? [
+            { key: 'Pragma', value: 'no-cache' },
+            { key: 'Expires', value: '0' },
+            { key: 'Surrogate-Control', value: 'no-store' },
+          ] : []),
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, max-age=0' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
+        ],
+      },
+    ];
+  },
+}
+
+module.exports = nextConfig
