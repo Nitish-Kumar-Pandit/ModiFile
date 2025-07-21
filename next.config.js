@@ -3,6 +3,10 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
+  // Enable WebAssembly support for Vercel deployment
+  experimental: {
+    wasmAsyncLoading: true,
+  },
   // Disable caching completely in development
   ...(process.env.NODE_ENV === 'development' && {
     onDemandEntries: {
