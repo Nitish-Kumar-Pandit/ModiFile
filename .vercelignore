@@ -1,0 +1,57 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds
+.next/
+out/
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Cache directories
+.turbo/
+.swc/
+.cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Development files
+clear-cache.js
+public/cache-buster.js
+public/force-refresh.js
+public/suppress-warnings.js
+public/debug-errors.js
+
+# Temporary files
+*.tmp
+*.temp
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
