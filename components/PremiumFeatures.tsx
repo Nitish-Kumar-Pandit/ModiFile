@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { MagneticHover } from './smooth';
+import { Sparkles } from 'lucide-react';
 import {
   FileImage, FileVideo, FileAudio, FileText,
   Zap, Shield, Globe, Star,
