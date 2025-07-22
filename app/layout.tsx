@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     keywords: "file converter, image converter, video converter, audio converter, smooth file conversion, unlimited converter, modifile",
     icons: {
         icon: [
+            { url: '/favicon.ico', sizes: '32x32' },
             { url: '/favicon.svg', type: 'image/svg+xml' },
-            { url: '/favicon.svg', sizes: '32x32', type: 'image/svg+xml' },
         ],
         apple: [
             { url: '/favicon.svg', sizes: '180x180', type: 'image/svg+xml' },

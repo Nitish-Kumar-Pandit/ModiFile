@@ -3,10 +3,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  // Enable WebAssembly support for Vercel deployment
-  experimental: {
-    wasmAsyncLoading: true,
-  },
+  // WebAssembly support configured in webpack section below
   // Disable caching completely in development
   ...(process.env.NODE_ENV === 'development' && {
     onDemandEntries: {
@@ -36,11 +33,11 @@ const nextConfig = {
       };
     }
 
-    // Handle FFmpeg worker files
-    config.module.rules.push({
-      test: /\.wasm$/,
-      type: 'webassembly/async',
-    });
+    // Enable WebAssembly support for FFmpeg
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
 
     // Handle worker files for FFmpeg
     config.module.rules.push({
