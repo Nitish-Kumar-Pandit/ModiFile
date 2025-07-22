@@ -18,6 +18,15 @@ const nextConfig = {
     },
   },
   webpack: (config, { isServer }) => {
+    // Polyfill 'self' for SSR to avoid 'self is not defined' errors
+    if (isServer) {
+      config.plugins = config.plugins || [];
+      config.plugins.push(
+        new (require('webpack')).DefinePlugin({
+          self: 'globalThis',
+        })
+      );
+    }
     // Handle FFmpeg and other Node.js modules
     if (!isServer) {
       config.resolve.fallback = {
@@ -51,10 +60,15 @@ const nextConfig = {
       },
     });
 
-    // Ignore FFmpeg worker in server-side builds
+    // Ignore FFmpeg worker and browser-only libraries in server-side builds
     if (isServer) {
       config.externals = config.externals || [];
-      config.externals.push('@ffmpeg/ffmpeg', '@ffmpeg/util');
+      config.externals.push(
+        '@ffmpeg/ffmpeg',
+        '@ffmpeg/util',
+        'lucide-react',
+        'framer-motion'
+      );
     }
 
     // Optimize for faster builds and runtime

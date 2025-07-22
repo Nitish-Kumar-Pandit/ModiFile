@@ -1,7 +1,5 @@
 // imports
 import { Action } from '../types';
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile } from '@ffmpeg/util';
 
 function getFileExtension(file_name: string) {
   const regex = /(?:\.([^.]+))?$/; // Matches the last dot and everything after it
@@ -157,9 +155,12 @@ function buildImageCommand(cmd: string[], output: string, to: string, settings?:
 }
 
 export default async function convert(
-  ffmpeg: FFmpeg,
+  ffmpeg: any, // Use any type to avoid import issues
   action: Action,
 ): Promise<any> {
+  // Dynamic imports to avoid server-side rendering issues
+  const { fetchFile } = await import('@ffmpeg/util');
+  
   const { file, to, file_name, file_type, settings } = action;
   const input = getFileExtension(file_name);
   const output = removeFileExtension(file_name) + '.' + to;
