@@ -1,26 +1,21 @@
-# Dependencies
-node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Development files
+clear-cache.js
+public/cache-buster.js
+public/debug-errors.js
+public/force-refresh.js
+public/suppress-warnings.js
 
-# Production builds
-.next/
-out/
-dist/
-build/
+# Service worker (can cause SSR issues during build)
+# public/sw.js
 
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Cache directories
-.turbo/
-.swc/
-.cache/
+# Development and testing files
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+__tests__/
+test/
+tests/
 
 # IDE files
 .vscode/
@@ -34,24 +29,48 @@ Thumbs.db
 
 # Logs
 *.log
-
-# Development files
-clear-cache.js
-public/cache-buster.js
-public/force-refresh.js
-public/suppress-warnings.js
-public/debug-errors.js
-
-# Temporary files
-*.tmp
-*.temp
-
-# Coverage reports
-coverage/
-.nyc_output/
+logs/
 
 # Runtime data
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output/
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build output
+.next/
+out/
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out

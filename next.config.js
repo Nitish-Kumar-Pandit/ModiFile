@@ -3,6 +3,12 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
+  output: 'standalone',
+  trailingSlash: false,
+  // Disable static optimization for pages that use browser APIs
+  // experimental: {
+  //   esmExternals: 'loose',
+  // },
   // WebAssembly support configured in webpack section below
   // Disable caching completely in development
   ...(process.env.NODE_ENV === 'development' && {
@@ -65,10 +71,15 @@ const nextConfig = {
       config.externals = config.externals || [];
       config.externals.push(
         '@ffmpeg/ffmpeg',
-        '@ffmpeg/util',
-        'lucide-react',
-        'framer-motion'
+        '@ffmpeg/util'
       );
+      
+      // Add resolve alias for problematic modules
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@ffmpeg/ffmpeg': false,
+        '@ffmpeg/util': false,
+      };
     }
 
     // Optimize for faster builds and runtime

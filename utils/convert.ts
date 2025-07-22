@@ -158,6 +158,11 @@ export default async function convert(
   ffmpeg: any, // Use any type to avoid import issues
   action: Action,
 ): Promise<any> {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined') {
+    throw new Error('File conversion can only be performed in the browser');
+  }
+
   // Dynamic imports to avoid server-side rendering issues
   const { fetchFile } = await import('@ffmpeg/util');
   

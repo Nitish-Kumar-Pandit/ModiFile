@@ -1,10 +1,16 @@
 // Dynamic imports for FFmpeg to avoid build issues
 export default async function loadFfmpeg() {
-  if (typeof window === 'undefined') {
-    throw new Error('FFmpeg can only be loaded in the browser');
+  // Enhanced browser environment check
+  if (typeof window === 'undefined' || typeof document === 'undefined' || typeof navigator === 'undefined') {
+    throw new Error('FFmpeg can only be loaded in the browser environment');
   }
 
   try {
+    // Check for WebAssembly support
+    if (typeof WebAssembly === 'undefined') {
+      throw new Error('WebAssembly is not supported in this browser');
+    }
+
     const { FFmpeg } = await import('@ffmpeg/ffmpeg');
     const { toBlobURL } = await import('@ffmpeg/util');
 
