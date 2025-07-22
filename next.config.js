@@ -3,12 +3,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  output: 'standalone',
   trailingSlash: false,
-  // Disable static optimization for pages that use browser APIs
-  // experimental: {
-  //   esmExternals: 'loose',
-  // },
   // WebAssembly support configured in webpack section below
   // Disable caching completely in development
   ...(process.env.NODE_ENV === 'development' && {
@@ -17,22 +12,18 @@ const nextConfig = {
       pagesBufferLength: 1,
     },
   }),
-  turbopack: {
-    resolveAlias: {
-      '@': '.',
-      '@/*': './*',
-    },
-  },
+  // Turbopack configuration removed for compatibility
   webpack: (config, { isServer }) => {
-    // Polyfill 'self' for SSR to avoid 'self is not defined' errors
-    if (isServer) {
-      config.plugins = config.plugins || [];
-      config.plugins.push(
-        new (require('webpack')).DefinePlugin({
-          self: 'globalThis',
-        })
-      );
-    }
+    // Fix 'self is not defined' error for SSR
+    config.plugins = config.plugins || [];
+    config.plugins.push(
+      new config.webpack.DefinePlugin({
+        'global.GENTLY': false,
+        'self': isServer ? 'undefined' : 'self',
+        'window': isServer ? 'undefined' : 'window',
+        'globalThis': isServer ? 'globalThis' : 'globalThis',
+      })
+    );
     // Handle FFmpeg and other Node.js modules
     if (!isServer) {
       config.resolve.fallback = {
@@ -66,19 +57,23 @@ const nextConfig = {
       },
     });
 
-    // Ignore FFmpeg worker and browser-only libraries in server-side builds
+    // Ignore FFmpeg and browser-only libraries in server-side builds
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push(
         '@ffmpeg/ffmpeg',
-        '@ffmpeg/util'
+        '@ffmpeg/util',
+        'lenis',
+        'gsap'
       );
-      
+
       // Add resolve alias for problematic modules
       config.resolve.alias = {
         ...config.resolve.alias,
         '@ffmpeg/ffmpeg': false,
         '@ffmpeg/util': false,
+        'lenis': false,
+        'gsap': false,
       };
     }
 

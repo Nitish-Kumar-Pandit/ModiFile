@@ -9,6 +9,7 @@ import PageTransition from "../components/page-transition";
 import ErrorBoundary from "../components/ErrorBoundary";
 import ServiceWorkerRegistration from "../components/ServiceWorkerRegistration";
 import FloatingThemeToggle from "../components/ScrollToTop";
+import ClientOnly from "../components/ClientOnly";
 const inter = Inter({ subsets: ["latin"], display: 'swap' });
 
 
@@ -58,7 +59,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </head>
             <body className={inter.className}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem themes={["light", "dark"]}>
-                    <ServiceWorkerRegistration />
+                    <ClientOnly>
+                        <ServiceWorkerRegistration />
+                    </ClientOnly>
                     <Navbar />
                     <Toaster />
                     <ErrorBoundary>
@@ -67,7 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                                 {children}
                             </PageTransition>
                             {/* <PremiumFooter /> */}
-                            <FloatingThemeToggle />
+                            <ClientOnly>
+                                <FloatingThemeToggle />
+                            </ClientOnly>
                         </div>
                     </ErrorBoundary>
                 </ThemeProvider>
